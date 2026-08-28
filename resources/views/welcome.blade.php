@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrizqi Pramadhana | AI Engineer & Web Developer</title>
+    
+    <!-- Engine Deteksi Tema (Mencegah Flicker) -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500;1,600&family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Swiper JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        crimson: {
+                            900: '#4a0404',
+                            800: '#7a0b0b',
+                            600: '#b81414',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        elegant: ['Playfair Display', 'serif'],
+                        signature: ['Cormorant Garamond', 'serif'], 
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-black text-slate-800 dark:text-gray-200 font-sans antialiased selection:bg-crimson-600 selection:text-white relative transition-colors duration-500">
+
+    <!-- Tombol Kontrol Tema (Floating Bottom Right) -->
+    <div class="fixed bottom-6 right-6 z-[100] group">
+        <button class="p-3 rounded-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 shadow-2xl text-slate-700 dark:text-gray-300 hover:scale-110 transition-transform flex items-center justify-center">
+            <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+        <!-- Menu Dropdown -->
+        <div class="absolute bottom-full right-0 mb-2 w-32 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden">
+            <button onclick="setTheme('light')" class="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors">Light</button>
+            <button onclick="setTheme('dark')" class="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors">Dark</button>
+            <button onclick="setTheme('system')" class="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors">System</button>
+        </div>
+    </div>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-6 pb-32">
+        
+        <!-- SECTION 1: HERO -->
+        <header class="relative min-h-[95vh] flex items-center pt-20 pb-12 overflow-hidden border-b border-slate-200 dark:border-zinc-900/50">
+            
+            <canvas id="binaryCanvas" class="absolute inset-0 w-full h-full z-0 opacity-20 dark:opacity-[0.45] pointer-events-none"></canvas>
+            
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-crimson-600/10 dark:bg-crimson-900/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full relative z-10">
+
+                <div class="lg:col-span-7 flex flex-col justify-center text-left space-y-6">
+                    
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/80 dark:bg-zinc-900/80 border border-slate-200 dark:border-crimson-900/50 w-max backdrop-blur-sm shadow-lg">
+                        <span class="w-2 h-2 rounded-full bg-crimson-600 animate-pulse"></span>
+                        <span class="text-slate-700 dark:text-gray-300 text-sm font-medium tracking-wider uppercase">Open to Work</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white drop-shadow-lg leading-tight">
+                        Engineering Robust <span class="text-transparent bg-clip-text bg-gradient-to-r from-crimson-600 to-red-400">Digital</span> Systems.
+                    </h1>
+
+                    <h2 class="font-signature italic text-3xl md:text-4xl text-slate-600 dark:text-gray-400 tracking-wide">
+                        Hello, I'm Arrizqi Pramadhana.
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-gray-400 leading-relaxed text-lg max-w-2xl font-light border-l-2 border-crimson-600 dark:border-crimson-800 pl-6">
+                        A dedicated Multimedia Engineer and Computer Engineering graduate focused on system resilience, interactive WebAR ecosystems, and AI-driven applications. Experienced in bridging technical backend engineering with high-end creative visual design.
+                    </p>
+
+                    <div class="flex flex-wrap gap-8 py-6">
+                        <div>
+                            <p class="text-4xl font-bold text-slate-900 dark:text-white">3.81</p>
+                            <p class="text-sm text-crimson-600 font-semibold uppercase tracking-widest mt-1">GPA (B.A.Sc)</p>
+                        </div>
+                        <div class="w-px bg-slate-300 dark:bg-zinc-800 hidden md:block"></div>
+                        <div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white leading-tight">AI Engineer<br>Web Developer</p>
+                            <p class="text-sm text-crimson-600 font-semibold uppercase tracking-widest mt-1">Tech Focus</p>
+                        </div>
+                        <div class="w-px bg-slate-300 dark:bg-zinc-800 hidden md:block"></div>
+                        <div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white leading-tight">North Sumatra,<br>Medan</p>
+                            <p class="text-sm text-crimson-600 font-semibold uppercase tracking-widest mt-1">Base Location</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="{{ asset('docs/cv.pdf') }}" target="_blank" class="px-8 py-4 bg-crimson-800 hover:bg-crimson-600 text-white font-semibold rounded-lg tracking-widest uppercase transition-all duration-300 shadow-[0_0_20px_rgba(184,20,20,0.3)]">
+                            Download Full CV
+                        </a>
+                        <a href="#about" class="px-8 py-4 bg-white/50 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-700 dark:text-gray-300 font-semibold rounded-lg tracking-widest uppercase transition-all duration-300 border border-slate-300 dark:border-zinc-700 backdrop-blur-sm">
+                            Read My Story
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative flex justify-center items-center mt-10 lg:mt-0">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-zinc-800 shadow-[0_0_50px_rgba(122,11,11,0.2)] dark:shadow-[0_0_50px_rgba(122,11,11,0.5)] group hover:border-crimson-600 transition-colors duration-500 bg-zinc-900">
+                        <img src="{{ asset('images/wisudapotrait1.JPG') }}" alt="Arrizqi Pramadhana" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110 object-[center_37%]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"></div>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- SECTION 1.5: BEHIND THE CODE -->
+        <section id="about" class="py-24 border-b border-slate-200 dark:border-zinc-900/50">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+                <div class="md:col-span-4">
+                    <h3 class="text-4xl md:text-5xl font-elegant font-semibold text-slate-900 dark:text-white tracking-wide">Behind the Code.</h3>
+                    <p class="font-signature text-2xl text-crimson-600 mt-2">My Journey & Expertise</p>
+                    <div class="w-16 h-1 bg-crimson-600 mt-6 rounded-full"></div>
+                </div>
+                <div class="md:col-span-8 space-y-6 text-slate-600 dark:text-gray-400 font-light leading-relaxed text-lg">
+                    <p>
+                        As an Applied Bachelor (D4) graduate in Graphic Multimedia Engineering Technology from Politeknik Negeri Medan, my technological journey is driven by a profound curiosity to bridge physical and digital worlds. My academic experience, enriched by the Merdeka Student Exchange Program (PMM Batch 3) at Politeknik Negeri Malang, shaped my adaptability, strategic communication, and cross-cultural collaboration skills.
+                    </p>
+                    <p>
+                        I operate at the intersection of engineering and creativity. My technical arsenal ranges from full-stack web development (Laravel, Next.js) and corporate database architectures to immersive Augmented Reality ecosystems utilizing Unity and WebAR (MindAR, A-Frame). I leverage tools like Blender, Unity, and Adobe Creative Suite to ensure every digital solution matches robust backend logic with intuitive, high-end visual design.
+                    </p>
+                    <p class="border-l-2 border-crimson-600 dark:border-crimson-800 pl-6 text-slate-800 dark:text-gray-300">
+                        From developing inclusive AR educational applications for hearing-impaired children to managing corporate databases and national-scale community initiatives as part of the Bank Indonesia (GenBI) scholarship, my core mission remains consistent: <span class="font-medium text-slate-900 dark:text-white">delivering high-impact, functional technology that transforms complex ideas into accessible reality.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1.7: WORK EXPERIENCE & PROJECTS -->
+        <section id="projects" class="py-24 border-b border-slate-200 dark:border-zinc-900/50">
+            <div class="mb-16">
+                <h3 class="text-4xl md:text-5xl font-elegant font-semibold text-slate-900 dark:text-white tracking-wide">Work Experience & Projects.</h3>
+                <p class="font-signature text-2xl text-crimson-600 mt-2">Professional, Research & Creative Track Record</p>
+                <div class="w-16 h-1 bg-crimson-600 mt-6 rounded-full"></div>
+            </div>
+
+            <div class="relative border-l border-slate-300 dark:border-zinc-800 ml-3 md:ml-6 space-y-16">
+
+                <!-- Item 1 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-crimson-600 ring-4 ring-slate-50 dark:ring-black group-hover:scale-125 transition-transform"></div>
+                    <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-xl hover:border-crimson-600/60 transition-all duration-300 shadow-xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Lead WebAR Engineer & Multimedia Developer @ <span class="text-crimson-600 dark:text-crimson-500">Besilam Babussalam</span></h4>
+                            <span class="text-sm font-semibold text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full w-max border border-slate-200 dark:border-zinc-700">May - July 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-gray-400 mb-6 italic">Live Production: besilambabussalam.com</p>
+                        <ul class="space-y-2 text-slate-600 dark:text-gray-400 font-light text-sm list-disc pl-5">
+                            <li>Engineered a marker-based WebAR wayfinding system using MindAR and A-Frame for real-time navigation across 7 historical sites.</li>
+                            <li>Integrated Next.js, custom interactive audio players for traditional Barzanji recitations, and high-resolution 360° drone videography.</li>
+                            <li>Executed zero-server-load deployment via cPanel Static Export, delegating AR computation to client GPUs and achieving a 100/100 SEO Score.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-crimson-600 ring-4 ring-slate-50 dark:ring-black group-hover:scale-125 transition-transform"></div>
+                    <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-xl hover:border-crimson-600/60 transition-all duration-300 shadow-xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Multimedia & WebAR Developer @ <span class="text-crimson-600 dark:text-crimson-500">Virtual Maimun</span></h4>
+                            <span class="text-sm font-semibold text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full w-max border border-slate-200 dark:border-zinc-700">May - July 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-gray-400 mb-6 italic">Live Production: virtualmaimun.com</p>
+                        <ul class="space-y-2 text-slate-600 dark:text-gray-400 font-light text-sm list-disc pl-5">
+                            <li>Designed and deployed an interactive virtual tour platform using 3DVista Tour Builder to digitally preserve cultural heritage sites.</li>
+                            <li>Produced independent 360° image stitching and aerial drone footage of Maimun Palace and surrounding conserved landmarks.</li>
+                            <li>Optimized frontend architecture with custom iframe bypassers and tactical touch interceptors for flawless gyroscope and WebXR performance.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-crimson-600 ring-4 ring-slate-50 dark:ring-black group-hover:scale-125 transition-transform"></div>
+                    <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-xl hover:border-crimson-600/60 transition-all duration-300 shadow-xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Project PIC & Full-Stack Engineer @ <span class="text-crimson-600 dark:text-crimson-500">PT Pertamina Patra Niaga</span></h4>
+                            <span class="text-sm font-semibold text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full w-max border border-slate-200 dark:border-zinc-700">March - May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-gray-400 mb-6 italic">Live Production: ppn-stakeholdermanagement.com</p>
+                        <ul class="space-y-2 text-slate-600 dark:text-gray-400 font-light text-sm list-disc pl-5">
+                            <li>Engineered a corporate-scale stakeholder database web application using Laravel (PHP), Tailwind CSS, and MySQL Cloud Hosting.</li>
+                            <li>Integrated Gemini AI to automate data classification and analysis, significantly accelerating the development lifecycle.</li>
+                            <li>Managed cPanel server administration, custom domains, SMTP SSL, and optimized query structures using Eager Loading to eliminate Error 503 bottlenecks.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-crimson-600 ring-4 ring-slate-50 dark:ring-black group-hover:scale-125 transition-transform"></div>
+                    <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-xl hover:border-crimson-600/60 transition-all duration-300 shadow-xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Lead Developer & Researcher @ <span class="text-crimson-600 dark:text-crimson-500">AR Wayfinding for Religious Tourism</span></h4>
+                            <span class="text-sm font-semibold text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full w-max border border-slate-200 dark:border-zinc-700">May - July 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-gray-400 mb-6 italic">Unity & AR Foundation Research</p>
+                        <ul class="space-y-2 text-slate-600 dark:text-gray-400 font-light text-sm list-disc pl-5">
+                            <li>Developed a compass-based orientation and marker tracking navigation system using Unity and AR Foundation.</li>
+                            <li>Transformed traditional directions into precise, real-time visual overlays guiding users interactively through complex sites.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-crimson-600 ring-4 ring-slate-50 dark:ring-black group-hover:scale-125 transition-transform"></div>
+                    <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-xl hover:border-crimson-600/60 transition-all duration-300 shadow-xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">NPC AI Researcher @ <span class="text-crimson-600 dark:text-crimson-500">Behavior Tree Research (Math Rescue)</span></h4>
+                            <span class="text-sm font-semibold text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full w-max border border-slate-200 dark:border-zinc-700">May - October 2025</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-gray-400 mb-6 italic">Undergraduate Thesis / R&D Project</p>
+                        <ul class="space-y-2 text-slate-600 dark:text-gray-400 font-light text-sm list-disc pl-5">
+                            <li>Conducted extensive technical analysis of Behavior Tree (BT) architectures to transcend traditional Finite State Machines in RPG environments.</li>
+                            <li>Engineered high-fidelity NPC decision-making logic, achieving adaptive, goal-oriented responses for immersive educational gameplay.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-crimson-600 ring-4 ring-slate-50 dark:ring-black group-hover:scale-125 transition-transform"></div>
+                    <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-xl hover:border-crimson-600/60 transition-all duration-300 shadow-xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Pubsosdok & ICT Division @ <span class="text-crimson-600 dark:text-crimson-500">GenBI (Bank Indonesia Scholarship)</span></h4>
+                            <span class="text-sm font-semibold text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full w-max border border-slate-200 dark:border-zinc-700">April 2024 - March 2025</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-gray-400 mb-6 italic">Community Leadership & Digital Asset Management</p>
+                        <ul class="space-y-2 text-slate-600 dark:text-gray-400 font-light text-sm list-disc pl-5">
+                            <li>Managed digital identity and visual communications, producing high-volume digital assets and official certificates for national-scale events.</li>
+                            <li>Maintained visual identity standards and supported community empowerment goals through professional-grade digital media.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: SLIDER PORTOFOLIO -->
+        <section id="portfolio" class="mb-32 pt-24">
+            <div class="mb-12 border-b border-slate-200 dark:border-crimson-900/50 pb-6 text-center">
+                <h3 class="text-4xl md:text-6xl font-elegant font-semibold text-slate-900 dark:text-white tracking-wide">Portfolio Slides</h3>
+                <p class="font-signature text-2xl text-crimson-600 mt-2">Projects & Visual Implementations</p>
+            </div>
+            
+            <div class="w-full bg-slate-100 dark:bg-zinc-900/40 p-4 border border-slate-300 dark:border-zinc-800/80 shadow-2xl relative select-none">
+                <div class="swiper mySwiper w-full h-[30vh] md:h-[80vh]">
+                    <div class="swiper-wrapper">
+                        @for ($i = 1; $i <= 19; $i++)
+                            <div class="swiper-slide flex justify-center items-center bg-slate-900 dark:bg-black group">
+                                <img src="{{ asset('images/' . $i . '.png') }}" alt="Slide {{ $i }}" class="max-w-full max-h-full object-contain cursor-pointer transition-transform duration-300 group-hover:scale-[1.02]" onclick="openFullscreen({{ $i }})">
+                            </div>
+                        @endfor
+                    </div>
+                    <div class="swiper-button-next !text-crimson-600"></div>
+                    <div class="swiper-button-prev !text-crimson-600"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: GALERI DOKUMENTASI -->
+        <section class="py-28 relative overflow-hidden">
+            <div class="mb-16 text-center">
+                <h3 class="text-4xl md:text-5xl font-elegant font-semibold text-slate-900 dark:text-white tracking-wide">Documentation.</h3>
+                <p class="font-signature text-2xl text-crimson-600 mt-2">Academic & Professional Journey</p>
+                <div class="w-16 h-1 bg-crimson-600 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto px-4 relative py-10 md:py-16">
+                
+                <div class="grid grid-cols-2 gap-4 md:gap-12 opacity-90 hover:opacity-100 transition-opacity duration-700">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer transform md:-rotate-3 hover:rotate-0 hover:z-40 transition-all duration-500 z-10 border border-slate-200 dark:border-none" onclick="openFullscreenDoc(1)">
+                        <img src="{{ asset('images/wisudapotrait1.JPG') }}" alt="Documentation 1" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer transform md:translate-y-8 md:rotate-2 hover:rotate-0 hover:z-40 transition-all duration-500 z-10 border border-slate-200 dark:border-none" onclick="openFullscreenDoc(2)">
+                        <img src="{{ asset('images/wisudapotrait2.JPG') }}" alt="Documentation 2" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer transform md:-translate-y-6 md:rotate-1 hover:rotate-0 hover:z-40 transition-all duration-500 z-10 mt-8 md:mt-0 border border-slate-200 dark:border-none" onclick="openFullscreenDoc(3)">
+                        <img src="{{ asset('images/wisudapotrait3.JPG') }}" alt="Documentation 3" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer transform md:-rotate-2 hover:rotate-0 hover:z-40 transition-all duration-500 z-10 mt-8 md:mt-0 border border-slate-200 dark:border-none" onclick="openFullscreenDoc(4)">
+                        <img src="{{ asset('images/wisudapotrait4.JPG') }}" alt="Documentation 4" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                </div>
+
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[62%] z-30 cursor-pointer shadow-[0_0_50px_rgba(0,0,0,0.5)] border-[6px] md:border-8 border-white dark:border-zinc-950 rounded-2xl md:rounded-3xl overflow-hidden group hover:scale-[1.03] transition-all duration-500" onclick="openFullscreenDoc(5)">
+                    <img src="{{ asset('images/wisudatogedirekturlanscape.jpg') }}" alt="Documentation Landscape" class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3.5: VISUAL IDENTITY (Premium Brand Guidelines) -->
+        <section class="py-28 border-b border-slate-200 dark:border-zinc-900/50 bg-slate-50/50 dark:bg-black/50">
+            <div class="mb-16 text-center">
+                <h3 class="text-4xl md:text-5xl font-elegant font-semibold text-slate-900 dark:text-white tracking-wide">Visual Identity.</h3>
+                <p class="font-signature text-2xl text-crimson-600 mt-2">The Monogram of Arrizqi</p>
+                <div class="w-16 h-1 bg-crimson-600 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
+                
+                <!-- Logo Mark Presentation (Construction Grid Style) -->
+                <div class="lg:col-span-5 relative bg-white dark:bg-zinc-900/60 border border-slate-200 dark:border-zinc-800/80 p-10 rounded-[2rem] shadow-xl flex flex-col justify-center items-center group overflow-hidden">
+                    
+                    <!-- Blueprint CSS Grid Background -->
+                    <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808015_1px,transparent_1px),linear-gradient(to_bottom,#80808015_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+                    
+                    <!-- Crosshair Accents -->
+                    <div class="absolute top-1/2 left-0 w-full h-[1px] bg-slate-200 dark:bg-zinc-800 pointer-events-none"></div>
+                    <div class="absolute top-0 left-1/2 w-[1px] h-full bg-slate-200 dark:bg-zinc-800 pointer-events-none"></div>
+
+                    <!-- Logo -->
+                    <div class="relative z-10 p-8 bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-full shadow-[0_0_40px_rgba(0,0,0,0.05)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-zinc-800">
+                        <img src="{{ asset('images/logoarz.png') }}" alt="Arrizqi Logo Mark" class="w-full max-w-[180px] object-contain dark:invert transition-transform duration-700 group-hover:scale-110 drop-shadow-md">
+                    </div>
+                    
+                    <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end z-10">
+                        <div class="flex flex-col">
+                            <div class="w-8 h-[2px] bg-crimson-600 mb-2"></div>
+                            <p class="tracking-[0.25em] font-bold text-slate-500 text-[10px] uppercase">Logo Mark</p>
+                        </div>
+                        <p class="tracking-[0.25em] font-bold text-slate-300 dark:text-zinc-700 text-4xl opacity-50">AR</p>
+                    </div>
+                </div>
+
+                <!-- Identity Breakdown (Cards Container) -->
+                <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    
+                    <!-- Anatomy -->
+                    <div class="md:col-span-2 bg-white dark:bg-zinc-900/60 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
+                        <div class="absolute top-0 left-8 w-12 h-[2px] bg-crimson-600"></div>
+                        
+                        <h4 class="text-sm font-bold text-slate-400 tracking-widest uppercase mb-6 mt-2">Monogram Anatomy</h4>
+                        
+                        <p class="text-slate-600 dark:text-gray-400 font-light text-sm md:text-base leading-relaxed mb-8">
+                            Dirancang dengan pendekatan <span class="italic font-medium text-slate-800 dark:text-gray-200">sharp-edge geometry</span>, piramida asimetris ini merepresentasikan ketangguhan logika dan arsitektur sistem seorang Engineer. Guratan garisnya menyembunyikan gabungan entitas huruf penyusun nama <strong class="text-slate-900 dark:text-white">ARRIZQI</strong>.
+                        </p>
+                        
+                        <!-- Floating Keys -->
+                        <div class="flex flex-wrap gap-4">
+                            @foreach(['A', 'R', 'I', 'Z', 'Q'] as $letter)
+                                <div class="flex items-center justify-center w-14 h-14 bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.5)] cursor-default hover:-translate-y-1 hover:border-crimson-500 dark:hover:border-crimson-500 transition-all duration-300">
+                                    <span class="font-sans font-black text-xl text-slate-800 dark:text-gray-200">{{ $letter }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Typography Specimen -->
+                    <div class="bg-white dark:bg-zinc-900/60 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-[2rem] shadow-xl relative">
+                        <div class="absolute top-0 left-8 w-12 h-[2px] bg-crimson-600"></div>
+                        <h4 class="text-sm font-bold text-slate-400 tracking-widest uppercase mb-6 mt-2">Logo Typo</h4>
+                        
+                        <div class="space-y-6">
+                            <!-- Font 1 -->
+                            <div>
+                                <h5 class="font-elegant text-3xl text-slate-900 dark:text-white mb-1">Garamond</h5>
+                                <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Editorial / Serif</p>
+                                <p class="font-elegant text-xs text-slate-400 dark:text-zinc-500 tracking-wider truncate">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll</p>
+                            </div>
+                            <div class="w-full h-px bg-slate-100 dark:bg-zinc-800/80"></div>
+                            <!-- Font 2 -->
+                            <div>
+                                <h5 class="font-sans font-extrabold text-2xl text-slate-900 dark:text-white tracking-tight mb-1">Inter Bold</h5>
+                                <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Technical / UI</p>
+                                <p class="font-sans font-bold text-xs text-slate-400 dark:text-zinc-500 tracking-wider truncate">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App Icon Ecosystem -->
+                    <div class="bg-white dark:bg-zinc-900/60 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-[2rem] shadow-xl relative flex flex-col justify-between">
+                        <div class="absolute top-0 left-8 w-12 h-[2px] bg-crimson-600"></div>
+                        <h4 class="text-sm font-bold text-slate-400 tracking-widest uppercase mb-6 mt-2">App Icon</h4>
+                        
+                        <div class="flex items-end gap-4 justify-center w-full pb-2">
+                            
+                            <!-- Large Squircle (Dark) -->
+                            <div class="w-24 h-24 bg-[#0a0a0b] dark:bg-zinc-100 rounded-[1.5rem] shadow-[0_10px_30px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_30px_rgba(255,255,255,0.05)] flex justify-center items-center p-5 transform hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('images/logoarz.png') }}" alt="Icon Dark" class="w-full h-full object-contain invert dark:invert-0 drop-shadow-md">
+                            </div>
+                            
+                            <!-- Medium Squircle (Brand Gradient) -->
+                            <div class="w-16 h-16 bg-gradient-to-br from-crimson-600 to-red-500 rounded-[1rem] shadow-[0_8px_20px_rgba(184,20,20,0.3)] flex justify-center items-center p-3 transform hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('images/logoarz.png') }}" alt="Icon Crimson" class="w-full h-full object-contain brightness-0 invert drop-shadow-sm">
+                            </div>
+
+                            <!-- Small Squircle (Light Outline) -->
+                            <div class="w-12 h-12 bg-white dark:bg-zinc-800 rounded-[0.8rem] shadow-[0_4px_10px_rgba(0,0,0,0.05)] border border-slate-200 dark:border-zinc-700 flex justify-center items-center p-2 transform hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('images/logoarz.png') }}" alt="Icon Outline" class="w-full h-full object-contain dark:invert">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: LEMBAR PERSEMBAHAN -->
+        <section class="py-24 relative overflow-hidden">
+            <div class="max-w-4xl mx-auto bg-white/80 dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/80 p-8 md:p-16 rounded-2xl shadow-2xl backdrop-blur-sm relative">
+                
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-crimson-600"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-crimson-600"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-crimson-600"></div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-crimson-600"></div>
+
+                <div class="text-center mb-12">
+                    <h3 class="font-elegant text-3xl md:text-4xl text-slate-900 dark:text-white tracking-widest uppercase">Lembar Persembahan</h3>
+                    <p class="font-signature text-2xl text-crimson-600 mt-2">Reflection & Gratitude</p>
+                </div>
+
+                <div class="space-y-8 text-slate-700 dark:text-gray-300 font-light text-base md:text-lg leading-relaxed">
+                    <blockquote class="border-l-2 border-crimson-600 pl-6 italic text-slate-600 dark:text-gray-400">
+                        "Never expect anything from anyone, because others may not truly understand your situation or what you're going through. Learn to rely on yourself, for what you start is your responsibility to finish. Do not blame others, and do not be too hard on yourself, because most obstacles and limitations often come from within. And believe this: the answers will be found by those who dare to begin and keep trying."
+                        <span class="block mt-2 text-sm not-italic font-semibold text-crimson-600 dark:text-crimson-500">— For Me</span>
+                    </blockquote>
+
+                    <blockquote class="border-l-2 border-slate-400 dark:border-zinc-700 pl-6 italic text-slate-600 dark:text-gray-400">
+                        "Sesungguhnya Allah mencela orang yang lemah, oleh karena itu bangkitlah! Dan apabila engkau kalah dalam suatu urusan maka ucapkanlah, ‘Hasbiyallah wa ni’mal wakil (cukup bagiku Allah dan Dialah sebaik-baik tempat berserah)."
+                        <span class="block mt-2 text-sm not-italic font-semibold text-slate-500 dark:text-gray-500">— (H.R. Abu Dawud)</span>
+                    </blockquote>
+
+                    <blockquote class="border-l-2 border-slate-400 dark:border-zinc-700 pl-6 italic text-slate-600 dark:text-gray-400">
+                        "Di masa kau terlahir, orang-orang tersediakan jalan dan jembatan yang dibangun panjang dan kokoh, siap menghantarkan ke mana saja. Tapi ada satu jalan yang sangat diminati, berjubellah orang-orang di situ. Adalah jalan pintas, karena setapak demi setapak adalah buang waktu, bukan lagi proses. Karena belokan dan tanjakan adalah kebingungan yang memutusasakan, bukan lagi tantangan. Kau terlahir di masa 'Maha Pendek'."
+                        <span class="block mt-2 text-sm not-italic font-semibold text-slate-500 dark:text-gray-500">— Festivalist, Hal-Hal Ini Terjadi</span>
+                    </blockquote>
+
+                    <div class="pt-6 border-t border-slate-200 dark:border-zinc-800 space-y-4 text-slate-700 dark:text-gray-300">
+                        <p>
+                            <span class="font-bold text-slate-900 dark:text-white text-xl">1.</span> Kepada diri sendiri. Terima kasih telah bertahan sejauh ini. Terima kasih karena tidak menyerah ketika ingin berhenti. Karena kalau bukan kamu yang bangkit, siapa lagi? Perjalanan ini bukan hal yang mudah dari rasa takut memulai, kegelisahan menghadapi kegagalan, hingga hari-hari penuh tekanan dan keraguan.
+                        </p>
+                        <p>
+                            Namun, di balik semua itu, kamu tetap memilih untuk berdiri. Kamu melangkah, meski pelan, meski tertatih. Hingga akhirnya, babak demi babak ini terselesaikan bukan hanya karena kecerdasan, tapi karena keberanian untuk memulai dan keteguhan untuk menyelesaikan apa yang telah dimulai.
+                        </p>
+                        <p>
+                            Semoga ke depannya kamu tumbuh menjadi pribadi yang lebih kuat; tidak takut akan hal baru, tidak larut dalam kemarahan, dan tidak dikalahkan oleh ego. Ingat selalu kepada Sang Pencipta, Allah SWT, dalam suka maupun duka. Jangan pernah lupa pada kedua orang tua, abang, kakak, dan keluarga yang menjadi pondasi hidupmu baik yang masih membersamai maupun yang telah lebih dulu pergi.
+                        </p>
+                        <p class="font-elegant italic text-slate-900 dark:text-white text-xl text-center pt-4">
+                            "Jalan ini masih panjang, tapi kamu sudah memulainya. Dan kamu pantas untuk menyelesaikannya dengan kepala tegak dan hati yang penuh syukur."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox Modal -->
+        <div id="fullscreenModal" class="fixed inset-0 z-[200] bg-white/95 dark:bg-black/95 hidden flex-col justify-center items-center opacity-0 transition-opacity duration-300 select-none backdrop-blur-md">
+            <button onclick="closeFullscreen()" class="absolute top-6 right-6 text-slate-600 dark:text-gray-500 hover:text-crimson-600 text-5xl font-light z-[201] transition-colors">&times;</button>
+            <button onclick="prevFullscreen(event)" class="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 text-slate-600 dark:text-gray-500 hover:text-crimson-600 text-6xl md:text-8xl font-light z-[201] transition-colors p-4">&lsaquo;</button>
+            <button onclick="nextFullscreen(event)" class="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 text-slate-600 dark:text-gray-500 hover:text-crimson-600 text-6xl md:text-8xl font-light z-[201] transition-colors p-4">&rsaquo;</button>
+            <img id="fullscreenImage" src="" alt="Fullscreen View" class="max-w-[95vw] max-h-[95vh] object-contain scale-95 transition-all duration-300 drop-shadow-2xl">
+        </div>
+    </main>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Inisialisasi Swiper
+        var swiper = new Swiper(".mySwiper", {
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
+            keyboard: { enabled: true }, grabCursor: true,
+        });
+
+        // Logika Tema (Light/Dark/System)
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function updateIcon() {
+            if (document.documentElement.classList.contains('dark')) {
+                // Ikon Bulan (Dark)
+                themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            } else {
+                // Ikon Matahari (Light)
+                themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+            }
+        }
+
+        function setTheme(mode) {
+            if (mode === 'light') {
+                localStorage.theme = 'light';
+                document.documentElement.classList.remove('dark');
+            } else if (mode === 'dark') {
+                localStorage.theme = 'dark';
+                document.documentElement.classList.add('dark');
+            } else {
+                localStorage.removeItem('theme');
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+            updateIcon();
+        }
+
+        // Jalankan saat load
+        updateIcon();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!('theme' in localStorage)) {
+                if (e.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                updateIcon();
+            }
+        });
+
+        // Logika Lightbox (Terpisah Slides & Docs)
+        let currentMode = 'slides'; 
+        let currentIndex = 1;
+        const maxSlides = 19;
+        const imageBasePath = "{{ asset('images') }}";
+        const docImages = [
+            `${imageBasePath}/wisudapotrait1.JPG`,
+            `${imageBasePath}/wisudapotrait2.JPG`,
+            `${imageBasePath}/wisudapotrait3.JPG`,
+            `${imageBasePath}/wisudapotrait4.JPG`,
+            `${imageBasePath}/wisudatogedirekturlanscape.jpg`
+        ];
+
+        function openFullscreen(index) {
+            currentMode = 'slides';
+            currentIndex = index;
+            renderModalImage(`${imageBasePath}/${currentIndex}.png`);
+        }
+
+        function openFullscreenDoc(index) {
+            currentMode = 'docs';
+            currentIndex = index;
+            renderModalImage(docImages[currentIndex - 1]);
+        }
+
+        function renderModalImage(src) {
+            const modal = document.getElementById('fullscreenModal');
+            const img = document.getElementById('fullscreenImage');
+            img.src = src;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                img.classList.remove('scale-95');
+                img.classList.add('scale-100');
+            }, 10);
+        }
+
+        function updateModalDisplay() {
+            const img = document.getElementById('fullscreenImage');
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = currentMode === 'slides' ? `${imageBasePath}/${currentIndex}.png` : docImages[currentIndex - 1];
+                img.style.opacity = 1;
+            }, 150);
+        }
+
+        function nextFullscreen(event) {
+            if(event) event.stopPropagation();
+            if (currentMode === 'slides') {
+                currentIndex = currentIndex < maxSlides ? currentIndex + 1 : 1;
+            } else {
+                currentIndex = currentIndex < docImages.length ? currentIndex + 1 : 1;
+            }
+            updateModalDisplay();
+        }
+
+        function prevFullscreen(event) {
+            if(event) event.stopPropagation();
+            if (currentMode === 'slides') {
+                currentIndex = currentIndex > 1 ? currentIndex - 1 : maxSlides;
+            } else {
+                currentIndex = currentIndex > 1 ? currentIndex - 1 : docImages.length;
+            }
+            updateModalDisplay();
+        }
+
+        function closeFullscreen() {
+            const modal = document.getElementById('fullscreenModal');
+            const img = document.getElementById('fullscreenImage');
+            modal.classList.add('opacity-0');
+            img.classList.remove('scale-100');
+            img.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                img.src = ''; 
+            }, 300);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            const modal = document.getElementById('fullscreenModal');
+            if (!modal.classList.contains('hidden')) {
+                if (event.key === "Escape") closeFullscreen();
+                if (event.key === "ArrowRight") nextFullscreen();
+                if (event.key === "ArrowLeft") prevFullscreen();
+            }
+        });
+
+        // Animasi Binary Canvas
+        const canvas = document.getElementById('binaryCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        const binaryChars = '01';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(0).map(() => Math.random() * canvas.height);
+        
+        function drawBinary() {
+            const isDark = document.documentElement.classList.contains('dark');
+            ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.05)' : 'rgba(248, 250, 252, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#b81414'; 
+            ctx.font = fontSize + 'px monospace';
+            for(let i = 0; i < drops.length; i++) {
+                const text = binaryChars.charAt(Math.floor(Math.random() * binaryChars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawBinary, 50);
+        window.addEventListener('resize', () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        });
+    </script>
+</body>
+</html>
