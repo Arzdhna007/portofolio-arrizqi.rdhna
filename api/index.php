@@ -1,30 +1,44 @@
 <?php
 
-// 1. Paksa semua error tampil di layar web (X-Ray Mode)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// 1. Tangkap semua Fatal Error yang menyebabkan layar 500 Vercel
+register_shutdown_function(function () {
+    $error = error_get_last();
+    if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        http_response_code(500);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'DIAGNOSTIC_STATUS' => 'LARAVEL_CRASHED',
+            'ERROR_MESSAGE' => $error['message'],
+            'FILE_LOCATION' => $error['file'],
+            'LINE' => $error['line']
+        ]);
+        exit;
+    }
+});
 
-// 2. Buat direktori rahasia di dalam RAM Vercel agar Laravel bisa bernapas
-$tmpViews = '/tmp/storage/framework/views';
-if (!is_dir($tmpViews)) {
-    mkdir($tmpViews, 0777, true);
+// 2. Jalur Tes Eksekusi Murni (Bypass Laravel)
+if (isset($_GET['ping'])) {
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'Mesin PHP Vercel menyala dan berfungsi normal.']);
+    exit;
 }
 
-// 3. Paksa Laravel menggunakan direktori tersebut
-putenv('VIEW_COMPILED_PATH=' . $tmpViews);
+// 3. Validasi kegagalan build Composer Vercel
+if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'DIAGNOSTIC_STATUS' => 'MISSING_VENDOR',
+        'ERROR_MESSAGE' => 'Folder /vendor tidak ditemukan. Vercel gagal menjalankan composer install.'
+    ]);
+    exit;
+}
+
+// 4. Adaptasi Storage Serverless
+putenv('VIEW_COMPILED_PATH=/tmp');
 putenv('CACHE_DRIVER=array');
 putenv('SESSION_DRIVER=cookie');
-putenv('LOG_CHANNEL=stderr');
 
-// 4. Eksekusi mesin utama
-try {
-    require __DIR__ . '/../public/index.php';
-} catch (\Throwable $e) {
-    // Jika masih crash, cetak pesan errornya dalam huruf tebal di web
-    echo "<h1 style='color:red;'>Terjadi Error pada Laravel:</h1>";
-    echo "<div style='background:#f4f4f4; padding:20px; border:1px solid #ccc;'>";
-    echo "<strong>Pesan:</strong> " . $e->getMessage() . "<br><br>";
-    echo "<strong>Lokasi:</strong> " . $e->getFile() . " (Baris " . $e->getLine() . ")";
-    echo "</div>";
-}
+// 5. Eksekusi Laravel
+$_SERVER['DOCUMENT_ROOT'] = __DIR__ . '/../public';
+require __DIR__ . '/../public/index.php';
